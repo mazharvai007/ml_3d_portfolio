@@ -14,7 +14,7 @@ import { a } from '@react-spring/three';
 
 import islandScene from '../assets/3d/island.glb';
 
-const Island = ({ isRotating, setIsRotating, ...props }) => {
+const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 	const islandRef = useRef();
 	// Get access to the Three.js renderer and viewport
 	const { gl, viewport } = useThree();
@@ -123,13 +123,21 @@ const Island = ({ isRotating, setIsRotating, ...props }) => {
 		};
 	}, [gl, handlePointerDown, handlePointerMove, handlePointerUp]);
 
+	/**
+	 * This function is called on each frame update
+	 */
 	useFrame(() => {
+		// If not rotating, apply damping to slow down the rotation (smoothly)
 		if (!isRotating) {
+			// apply damping factor
 			rotationSpeed.current *= dampingFactor;
 
+			// Stop rotation when speed is very small
 			if (Math.abs(rotationSpeed.current) < 0.001) {
 				rotationSpeed.current = 0;
 			}
+
+			islandRef.current.rotation.y += rotationSpeed.current;
 		} else {
 			const rotation = islandRef.current.rotation.y;
 
