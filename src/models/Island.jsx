@@ -87,11 +87,13 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 	const handleKeyDown = (e) => {
 		if (e.key === 'ArrowLeft') {
 			if (!isRotating) setIsRotating(true);
-			islandRef.current.rotation.y += 0.01 * Math.PI;
+
+			islandRef.current.rotation.y += 0.005 * Math.PI;
 			rotationSpeed.current = 0.007;
 		} else if (e.key === 'ArrowRight') {
 			if (!isRotating) setIsRotating(true);
-			islandRef.current.rotation.y -= 0.01 * Math.PI;
+
+			islandRef.current.rotation.y -= 0.005 * Math.PI;
 			rotationSpeed.current = -0.007;
 		}
 	};
@@ -108,6 +110,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
 	useEffect(() => {
 		const canvas = gl.domElement;
+
 		canvas.addEventListener('pointerdown', handlePointerDown);
 		canvas.addEventListener('pointerup', handlePointerUp);
 		canvas.addEventListener('pointermove', handlePointerMove);
@@ -158,21 +161,21 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 			 *     circle in radians.
 			 */
 
-			const normalizeRotation =
-				((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 & Math.PI);
+			const normalizedRotation =
+				((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 
 			// Set the current state based on the island's orientation
 			switch (true) {
-				case normalizeRotation >= 5.45 && normalizeRotation <= 5.85:
+				case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
 					setCurrentStage(4);
 					break;
-				case normalizeRotation >= 0.85 && normalizeRotation <= 1.3:
+				case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
 					setCurrentStage(3);
 					break;
-				case normalizeRotation >= 2.4 && normalizeRotation <= 2.6:
+				case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
 					setCurrentStage(2);
 					break;
-				case normalizeRotation >= 4.25 && normalizeRotation <= 4.75:
+				case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
 					setCurrentStage(1);
 					break;
 				default:
