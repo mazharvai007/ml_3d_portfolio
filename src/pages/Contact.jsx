@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
+
 import { TextInput, TextArea, Button } from '../components';
 
 const Contact = () => {
@@ -6,11 +8,42 @@ const Contact = () => {
 	const [form, setForm] = useState({ name: '', email: '', message: '' });
 	const [loading, setLoading] = useState(false);
 
-	const handleChange = () => {};
+	const handleChange = ({ target: { name, value } }) => {
+		setForm({ ...form, [name]: value });
+	};
+
 	const handleFocus = () => {};
 	const handleBlur = () => {};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setLoading(true);
+
+		emailjs
+			.send(
+				import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+				import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+				{
+					from_name: form.name,
+					to_name: 'Mazharul Islam',
+					from_email: form.email,
+					to_email: 'mitutul87@gmail.com',
+					message: form.message,
+				},
+				import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+			)
+			.then(() => {
+				setLoading(false);
+
+				// TODO: Show success message
+				// TODO: Hide an alert
+			})
+			.catch((error) => {
+				setLoading(false);
+				console.log(error);
+
+				// TODO: Show error message
+			});
 	};
 
 	return (
@@ -25,13 +58,14 @@ const Contact = () => {
 					<TextInput
 						label="Name"
 						type="text"
-						name="email"
+						name="name"
 						className="input"
 						value={form.name}
 						placeholder="John"
 						onChange={handleChange}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
+						required
 					/>
 					<TextInput
 						label="Email"
@@ -43,6 +77,7 @@ const Contact = () => {
 						onChange={handleChange}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
+						required
 					/>
 					<TextArea
 						label="Your Message"
@@ -54,6 +89,7 @@ const Contact = () => {
 						onChange={handleChange}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
+						required
 					/>
 
 					<Button
