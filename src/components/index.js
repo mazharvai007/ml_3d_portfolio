@@ -4,5 +4,18 @@ import CTA from './CTA';
 import Footer from './Footer';
 import HomeInfo from './HomeInfo';
 import Loader from './Loader';
+import TextInput from './TextInput';
+import TextArea from './TextArea';
+import Button from './Button';
 
-export { Navbar, Alert, CTA, Footer, HomeInfo, Loader };
+export {
+	Navbar,
+	Alert,
+	CTA,
+	Footer,
+	HomeInfo,
+	Loader,
+	TextInput,
+	TextArea,
+	Button,
+};
