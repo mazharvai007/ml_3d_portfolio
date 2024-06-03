@@ -1,13 +1,15 @@
 import { Suspense, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-import { TextInput, TextArea, Button, Loader } from '../components';
+import { TextInput, TextArea, Button, Loader, Alert } from '../components';
 import { Canvas } from '@react-three/fiber';
 import { Fox } from '../models';
+import useAlert from '../hooks/useAlert';
 
 const Contact = () => {
 	const formRef = useRef();
 	const [form, setForm] = useState({ name: '', email: '', message: '' });
+	const { alert, showAlert, hideAlert } = useAlert();
 	const [loading, setLoading] = useState(false);
 	const [currentAnimation, setCurrentAnimation] = useState('idle');
 
@@ -40,23 +42,35 @@ const Contact = () => {
 				setLoading(false);
 
 				// TODO: Show success message
-				// TODO: Hide an alert
+				showAlert({
+					show: true,
+					text: 'Thank you for your message 😃',
+					type: 'success',
+				});
 
+				// TODO: Hide an alert
 				setTimeout(() => {
+					hideAlert(false);
 					setCurrentAnimation('idle');
 					setForm({ name: '', email: '', message: '' });
 				}, [3000]);
 			})
 			.catch((error) => {
 				setLoading(false);
-				console.log(error);
+				console.error(error);
 
 				// TODO: Show error message
+				showAlert({
+					show: true,
+					text: 'I did not receive your message 😃',
+					type: 'danger',
+				});
 			});
 	};
 
 	return (
 		<section className="relative flex lg:flex-row flex-col max-container">
+			{alert.show && <Alert {...alert} />}
 			<div className="flex-1 min-w-[50%] flex flex-col">
 				<h1 className="head-text">Get in Touch</h1>
 				<form
