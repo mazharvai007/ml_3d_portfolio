@@ -109,7 +109,7 @@ export const skills = [
 	},
 ];
 
-export const experience = [
+export const experiences = [
 	{
 		title: 'React.js Developer',
 		companyName: 'Starbucks',
@@ -125,7 +125,7 @@ export const experience = [
 	},
 	{
 		title: 'React Native Developer',
-		company_name: 'Tesla',
+		companyName: 'Tesla',
 		icon: tesla,
 		iconBg: '#fbc3bc',
 		date: 'Jan 2021 - Feb 2022',
@@ -138,7 +138,7 @@ export const experience = [
 	},
 	{
 		title: 'Web Developer',
-		company_name: 'Shopify',
+		companyName: 'Shopify',
 		icon: shopify,
 		iconBg: '#b7e4c7',
 		date: 'Jan 2022 - Jan 2023',
@@ -151,7 +151,7 @@ export const experience = [
 	},
 	{
 		title: 'Full stack Developer',
-		company_name: 'Meta',
+		companyName: 'Meta',
 		icon: meta,
 		iconBg: '#a2d2ff',
 		date: 'Jan 2023 - Present',
